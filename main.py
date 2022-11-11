@@ -7,7 +7,6 @@ class Organism:
         pass
 
 class Population:
-    
 
     def __init__(self) -> None:
         self.popSize = 10
