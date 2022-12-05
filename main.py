@@ -10,8 +10,13 @@
 #                                (this way we will not have to deal with computing convergence)
 # STOP
 
+#################################################################################################################
+
 import random
 import matplotlib.pyplot as plt
+
+#################################################################################################################
+# CLASSES
 
 class Organism:
     genes = []
@@ -28,7 +33,6 @@ class Organism:
 
         pass
 
-# Population is made up of organisms
 class Population:
     organisms = []
     #TODO: decide on population size
@@ -38,6 +42,9 @@ class Population:
         for i in range(self.size):
             self.organisms.append(Organism())
         pass
+
+#################################################################################################################
+# MAIN
 
 def main():
     #TODO: decide on number of generations to run for
@@ -76,10 +83,14 @@ def main():
 
         # wait until last generation's music is done?
         # TODO: output music
+        # use currGeneration.organisms[i].fitness as MIDI notes
 
     print("Finished")
 
     pass
+
+#################################################################################################################
+# FUNCTIONS
 
 
 def computeFitness(genNum, currGen, nextGen):
@@ -139,7 +150,7 @@ def plotFitness(genNum, currGen):
     plt.title('Fitness for Generation ' + str(genNum))
     plt.show()
 
-
+#################################################################################################################
 
 if __name__ == "__main__":
     main()
