@@ -15,6 +15,7 @@
 import random
 import matplotlib.pyplot as plt
 
+
 #################################################################################################################
 # CLASSES
 
@@ -22,15 +23,14 @@ class Organism:
     genes = []
     fitness = 0
 
-    def __init__(self):
+    def __init__(self, size):
         #TODO: randomize fitness
-        self.fitness = random.randrange(1,100)
+        self.fitness = random.randrange(1,size/2)
         #TODO: randomize genes
         #
         #example
-        randomNum = random.randrange(1,100)
+        randomNum = random.randrange(1,size/2)
         self.genes = [randomNum]
-
         pass
 
 class Population:
@@ -40,7 +40,7 @@ class Population:
 
     def __init__(self):
         for i in range(self.size):
-            self.organisms.append(Organism())
+            self.organisms.append(Organism(self.size))
         pass
 
 #################################################################################################################
@@ -55,35 +55,33 @@ def main():
     currGeneration = Population()
 
     #TODO: compute fitness
-    computeFitness(0, currGeneration, currGeneration)
+    computeFitness(0, currGeneration)
 
     printFitness(0, currGeneration)
     plotFitness(0, currGeneration)
 
     for genNum in range(1, numGens + 1):
-        # STORE NEW DATA HERE
-        nextGeneration = Population()
         print(genNum)
 
         #TODO: selection (kill off one half)
-        selection(genNum, currGeneration, nextGeneration)
+        selection(genNum, currGeneration)
 
         #TODO: crossover (reproduce)
-        crossover(genNum, currGeneration, nextGeneration)
+        crossover(genNum, currGeneration)
 
         #TODO: mutate
-        mutation(genNum, currGeneration, nextGeneration)
+        mutation(genNum, currGeneration)
 
-        computeFitness(genNum, currGeneration, nextGeneration)
+        computeFitness(genNum, currGeneration)
 
         # show fitness
         plotFitness(genNum, currGeneration)
 
-        currGeneration = nextGeneration
-
         # wait until last generation's music is done?
         # TODO: output music
         # use currGeneration.organisms[i].fitness as MIDI notes
+
+        pass
 
     print("Finished")
 
@@ -93,7 +91,7 @@ def main():
 # FUNCTIONS
 
 
-def computeFitness(genNum, currGen, nextGen):
+def computeFitness(genNum, currGen):
     print("Computing Fitness for generation " + str(genNum))
     #
     #example
@@ -104,14 +102,14 @@ def computeFitness(genNum, currGen, nextGen):
     pass
     
 
-def selection(genNum, currGen, nextGen):
+def selection(genNum, currGen):
     print("Selecting best performers " + str(genNum))
     #
     #example
     currGen.organisms.sort(key=lambda x: x.fitness, reverse=False) #sort population list by fitness
     pass
 
-def crossover(genNum, currGen, nextGen):
+def crossover(genNum, currGen):
     print("Crossing over " + str(genNum))
     #
     #example: the top 75-100 percentile and 50-75 percentile make two children each
@@ -124,17 +122,23 @@ def crossover(genNum, currGen, nextGen):
         childTwo = parOne - 198
         currGen.organisms[childOne].genes[0] = currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]
         currGen.organisms[childTwo].genes[0] = currGen.organisms[parOne].genes[0] - currGen.organisms[parTwo].genes[0]
+        pass
     pass
 
 
-def mutation(genNum, currGen, nextGen):
+def mutation(genNum, currGen):
     print("Mutating " + str(genNum))
+    numMutated = currGen.size / 4
+    for i in range(1, int(numMutated)):
+        randomNum = random.randrange(0, currGen.size)
+        currGen.organisms[randomNum].genes[0] = random.randrange(1, currGen.size/2)
+        pass
     pass
-
 
 def printFitness(genNum, currGen):
     for organism in currGen.organisms:
         print(organism.fitness)
+    pass
 
 def plotFitness(genNum, currGen):
     x = []
@@ -144,11 +148,13 @@ def plotFitness(genNum, currGen):
         i = i + 1
         x.append(i)
         y.append(organism.genes[0])
+        pass
     plt.plot(x, y)
     plt.xlabel('Organism n')
     plt.ylabel('Fitness')
     plt.title('Fitness for Generation ' + str(genNum))
     plt.show()
+    pass
 
 #################################################################################################################
 
