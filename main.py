@@ -11,6 +11,7 @@
 # STOP
 
 import random
+import matplotlib.pyplot as plt
 
 class Organism:
     genes = []
@@ -47,9 +48,10 @@ def main():
     currGeneration = Population()
 
     #TODO: compute fitness
-    computeFitness(1, currGeneration, currGeneration)
+    computeFitness(0, currGeneration, currGeneration)
 
-    printFitness(1, currGeneration)
+    printFitness(0, currGeneration)
+    plotFitness(0, currGeneration)
 
     for genNum in range(1, numGens + 1):
         # STORE NEW DATA HERE
@@ -59,8 +61,6 @@ def main():
         #TODO: selection (kill off one half)
         selection(genNum, currGeneration, nextGeneration)
 
-        printFitness(genNum, currGeneration)
-
         #TODO: crossover (reproduce)
         crossover(genNum, currGeneration, nextGeneration)
 
@@ -68,6 +68,9 @@ def main():
         mutation(genNum, currGeneration, nextGeneration)
 
         computeFitness(genNum, currGeneration, nextGeneration)
+
+        # show fitness
+        plotFitness(genNum, currGeneration)
 
         currGeneration = nextGeneration
 
@@ -121,6 +124,21 @@ def mutation(genNum, currGen, nextGen):
 def printFitness(genNum, currGen):
     for organism in currGen.organisms:
         print(organism.fitness)
+
+def plotFitness(genNum, currGen):
+    x = []
+    y = []
+    i = 0
+    for organism in currGen.organisms:
+        i = i + 1
+        x.append(i)
+        y.append(organism.genes[0])
+    plt.plot(x, y)
+    plt.xlabel('Organism n')
+    plt.ylabel('Fitness')
+    plt.title('Fitness for Generation ' + str(genNum))
+    plt.show()
+
 
 
 if __name__ == "__main__":
