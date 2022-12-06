@@ -16,6 +16,7 @@ import random
 import matplotlib.pyplot as plt
 import time
 import argparse
+import datetime
 
 from pythonosc import udp_client
 
@@ -55,6 +56,7 @@ class Population:
 # MAIN
 
 def main():
+
     #TODO: decide on number of generations to run for
     #number of generations algorithm will run for
     numGens = 10
@@ -65,8 +67,8 @@ def main():
     #TODO: compute fitness
     computeFitness(0, currGeneration)
 
-    printFitness(0, currGeneration)
-    plotFitness(0, currGeneration)
+    #printFitnessOneLine(0, currGeneration)
+    #plotFitness(0, currGeneration)
 
     for genNum in range(1, numGens + 1):
         print(genNum)
@@ -84,12 +86,15 @@ def main():
 
         # show fitness
         findAvgFitness(genNum, currGeneration)
-        plotFitness(genNum, currGeneration)
-        #play midi
+        #printFitnessOneLine(genNum, currGeneration)
+        #plotFitness(genNum, currGeneration)
 
-        # wait until last generation's music is done?
         # TODO: output music
-        # use currGeneration.organisms[i].fitness as MIDI notes
+        # using currGeneration.organisms[i].fitness as MIDI notes
+        #play midi
+        playFitness(genNum, currGeneration)
+        # wait until last generation's music is done
+        input("press enter to continue")
 
         pass
 
@@ -150,6 +155,11 @@ def printFitness(genNum, currGen):
         print(organism.fitness)
     pass
 
+def printFitnessOneLine(genNum, currGen):
+    for organism in currGen.organisms:
+        print(int(organism.fitness), end=' ')
+    pass
+
 def plotFitness(genNum, currGen):
     x = []
     y = []
@@ -173,6 +183,18 @@ def findAvgFitness(genNum, currGen):
     avgFitness = total / currGen.size
     print("Gen " + str(genNum) + " Avg Fit: " + str(avgFitness))
 
+def playFitness(genNum, currGen):
+    IP = "127.0.0.1"
+    PORT_TO_MAX = 1001
+    client = udp_client.SimpleUDPClient(IP, PORT_TO_MAX)
+    client.send_message("genNum", genNum)
+    i = 0
+    for organism in currGen.organisms:
+        i = i + 1
+        #if (i % 2):
+        client.send_message("midi", organism.fitness)
+        client.send_message("orgNum", i)
+        time.sleep(.05)
 
 #################################################################################################################
 
