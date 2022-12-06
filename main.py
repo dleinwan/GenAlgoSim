@@ -14,6 +14,10 @@
 
 import random
 import matplotlib.pyplot as plt
+import time
+import argparse
+
+from pythonosc import udp_client
 
 
 #################################################################################################################
@@ -25,11 +29,11 @@ class Organism:
 
     def __init__(self, size):
         #TODO: randomize fitness
-        self.fitness = random.randrange(1,size/2)
+        self.fitness = random.randrange(1, 5)
         #TODO: randomize genes
         #
         #example
-        randomNum = random.randrange(1,size/2)
+        randomNum = random.randrange(1, 10)
         self.genes = [randomNum]
         pass
 
@@ -39,9 +43,13 @@ class Population:
     size = 200 #make sure divisible by 4
 
     def __init__(self):
+        self.organisms = []
+        self. size = 200
         for i in range(self.size):
             self.organisms.append(Organism(self.size))
         pass
+
+
 
 #################################################################################################################
 # MAIN
@@ -49,7 +57,7 @@ class Population:
 def main():
     #TODO: decide on number of generations to run for
     #number of generations algorithm will run for
-    numGens = 5
+    numGens = 10
 
     print("Beginning of Generations")
     currGeneration = Population()
@@ -75,7 +83,9 @@ def main():
         computeFitness(genNum, currGeneration)
 
         # show fitness
+        findAvgFitness(genNum, currGeneration)
         plotFitness(genNum, currGeneration)
+        #play midi
 
         # wait until last generation's music is done?
         # TODO: output music
@@ -92,7 +102,7 @@ def main():
 
 
 def computeFitness(genNum, currGen):
-    print("Computing Fitness for generation " + str(genNum))
+    #print("Computing Fitness for generation " + str(genNum))
     #
     #example
     for organism in currGen.organisms:
@@ -103,14 +113,14 @@ def computeFitness(genNum, currGen):
     
 
 def selection(genNum, currGen):
-    print("Selecting best performers " + str(genNum))
+    #print("Selecting best performers " + str(genNum))
     #
     #example
     currGen.organisms.sort(key=lambda x: x.fitness, reverse=False) #sort population list by fitness
     pass
 
 def crossover(genNum, currGen):
-    print("Crossing over " + str(genNum))
+    #print("Crossing over " + str(genNum))
     #
     #example: the top 75-100 percentile and 50-75 percentile make two children each
     orgPerP = currGen.size / 4  #organisms per 25th percentile
@@ -120,18 +130,18 @@ def crossover(genNum, currGen):
         #if size=200, replace lowest 100 with children of parents
         childOne = parOne - 199
         childTwo = parOne - 198
-        currGen.organisms[childOne].genes[0] = currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]
-        currGen.organisms[childTwo].genes[0] = currGen.organisms[parOne].genes[0] - currGen.organisms[parTwo].genes[0]
+        currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
+        currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
         pass
     pass
 
 
 def mutation(genNum, currGen):
-    print("Mutating " + str(genNum))
-    numMutated = currGen.size / 4
+    #print("Mutating " + str(genNum))
+    numMutated = currGen.size / 2
     for i in range(1, int(numMutated)):
         randomNum = random.randrange(0, currGen.size)
-        currGen.organisms[randomNum].genes[0] = random.randrange(1, currGen.size/2)
+        currGen.organisms[randomNum].genes[0] = random.randrange(1, int(currGen.size/2))
         pass
     pass
 
@@ -156,9 +166,18 @@ def plotFitness(genNum, currGen):
     plt.show()
     pass
 
+def findAvgFitness(genNum, currGen):
+    total = 0
+    for organism in currGen.organisms:
+        total = total + organism.genes[0]
+    avgFitness = total / currGen.size
+    print("Gen " + str(genNum) + " Avg Fit: " + str(avgFitness))
+
+
 #################################################################################################################
 
 if __name__ == "__main__":
     main()
+
 
 
