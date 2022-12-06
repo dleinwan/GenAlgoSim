@@ -30,11 +30,11 @@ class Organism:
 
     def __init__(self, size):
         #TODO: randomize fitness
-        self.fitness = random.randrange(1, 5)
+        self.fitness = random.randrange(1, 2)
         #TODO: randomize genes
         #
         #example
-        randomNum = random.randrange(1, 3)
+        randomNum = random.randrange(1, 2)
         self.genes = [randomNum]
         pass
 
@@ -59,7 +59,7 @@ def main():
 
     #TODO: decide on number of generations to run for
     #number of generations algorithm will run for
-    numGens = 10
+    numGens = 20
 
     print("Beginning of Generations")
     currGeneration = Population()
@@ -67,7 +67,7 @@ def main():
     #TODO: compute fitness
     computeFitness(0, currGeneration)
 
-    #printFitnessOneLine(0, currGeneration)
+    printFitnessOneLine(0, currGeneration)
     #plotFitness(0, currGeneration)
 
     for genNum in range(1, numGens + 1):
@@ -86,6 +86,7 @@ def main():
 
         # show fitness
         findAvgFitness(genNum, currGeneration)
+        printFitnessOneLine(genNum, currGeneration)
         #printFitnessOneLine(genNum, currGeneration)
         #plotFitness(genNum, currGeneration)
 
@@ -111,7 +112,7 @@ def computeFitness(genNum, currGen):
     #
     #example
     for organism in currGen.organisms:
-        organism.fitness = organism.genes[0] % random.randrange(1,25) #random number to mod by 
+        organism.fitness = organism.genes[0] % random.randrange(1,200) #random number to mod by 
         #print("fit: " + str(organism.fitness))
         # note: if your fitness calculation is the exact same every time, convergence will happen very quickly
     pass
@@ -143,7 +144,7 @@ def crossover(genNum, currGen):
 
 def mutation(genNum, currGen):
     #print("Mutating " + str(genNum))
-    numMutated = currGen.size / 2
+    numMutated = currGen.size / 8
     for i in range(1, int(numMutated)):
         randomNum = random.randrange(0, currGen.size)
         currGen.organisms[randomNum].genes[0] = random.randrange(1, int(currGen.size/2))
@@ -187,19 +188,38 @@ def playFitness(genNum, currGen):
     IP = "127.0.0.1"
     PORT_TO_MAX = 1001
     client = udp_client.SimpleUDPClient(IP, PORT_TO_MAX)
+
+    playing = 0
+    client.send_message("playing", playing)
     client.send_message("genNum", genNum)
     i = 0
     for organism in currGen.organisms:
+        playing = 1
+        client.send_message("playing", playing)
         i = i + 1
         #if (i % 2):
         client.send_message("midi", organism.fitness)
         client.send_message("orgNum", i)
         time.sleep(.02)
+    playing = 0
+    client.send_message("playing", playing)
+
+def stopSound():
+    IP = "127.0.0.1"
+    PORT_TO_MAX = 1001
+    client = udp_client.SimpleUDPClient(IP, PORT_TO_MAX)
+    playing = 0
+    client.send_message("playing", playing)
 
 #################################################################################################################
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        stopSound()
+        print('Interrupted')
+
 
 
 

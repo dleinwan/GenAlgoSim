@@ -4,6 +4,42 @@ Copy and paste the contents of the file below into an open Max patcher.
 {
 	"boxes" : [ 		{
 			"box" : 			{
+				"maxclass" : "message",
+				"text" : "1",
+				"numoutlets" : 1,
+				"id" : "obj-30",
+				"outlettype" : [ "" ],
+				"patching_rect" : [ 169.0, 432.0, 29.5, 22.0 ],
+				"numinlets" : 2
+			}
+
+		}
+, 		{
+			"box" : 			{
+				"maxclass" : "message",
+				"text" : "0",
+				"numoutlets" : 1,
+				"id" : "obj-28",
+				"outlettype" : [ "" ],
+				"patching_rect" : [ 124.0, 432.0, 29.5, 22.0 ],
+				"numinlets" : 2
+			}
+
+		}
+, 		{
+			"box" : 			{
+				"maxclass" : "newobj",
+				"text" : "sel 0 1",
+				"numoutlets" : 3,
+				"id" : "obj-26",
+				"outlettype" : [ "bang", "bang", "" ],
+				"patching_rect" : [ 119.0, 342.0, 44.0, 22.0 ],
+				"numinlets" : 3
+			}
+
+		}
+, 		{
+			"box" : 			{
 				"maxclass" : "comment",
 				"text" : "reset values",
 				"numoutlets" : 0,
@@ -51,11 +87,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 , 		{
 			"box" : 			{
 				"maxclass" : "newobj",
-				"text" : "t f f f",
-				"numoutlets" : 3,
+				"text" : "t f f f f",
+				"numoutlets" : 4,
 				"id" : "obj-17",
-				"outlettype" : [ "float", "float", "float" ],
-				"patching_rect" : [ 212.000003159046173, 79.200001180171967, 40.0, 22.0 ],
+				"outlettype" : [ "float", "float", "float", "float" ],
+				"patching_rect" : [ 212.000003159046173, 79.200001180171967, 50.5, 22.0 ],
 				"numinlets" : 1
 			}
 
@@ -218,12 +254,12 @@ Copy and paste the contents of the file below into an open Max patcher.
 , 		{
 			"box" : 			{
 				"maxclass" : "newobj",
-				"text" : "route midi genNum orgNum",
-				"numoutlets" : 4,
+				"text" : "route midi genNum orgNum playing",
+				"numoutlets" : 5,
 				"id" : "obj-6",
-				"outlettype" : [ "", "", "", "" ],
-				"patching_rect" : [ 36.000000536441803, 144.000002145767212, 156.0, 22.0 ],
-				"numinlets" : 4
+				"outlettype" : [ "", "", "", "", "" ],
+				"patching_rect" : [ 36.000000536441803, 144.000002145767212, 197.0, 22.0 ],
+				"numinlets" : 5
 			}
 
 		}
@@ -267,22 +303,22 @@ Copy and paste the contents of the file below into an open Max patcher.
  ],
 	"lines" : [ 		{
 			"patchline" : 			{
-				"source" : [ "obj-17", 2 ],
-				"destination" : [ "obj-21", 0 ]
+				"source" : [ "obj-30", 0 ],
+				"destination" : [ "obj-266", 0 ]
 			}
 
 		}
 , 		{
 			"patchline" : 			{
-				"source" : [ "obj-11", 0 ],
-				"destination" : [ "obj-17", 0 ]
+				"source" : [ "obj-28", 0 ],
+				"destination" : [ "obj-266", 0 ]
 			}
 
 		}
 , 		{
 			"patchline" : 			{
-				"source" : [ "obj-17", 0 ],
-				"destination" : [ "obj-2", 0 ]
+				"source" : [ "obj-17", 3 ],
+				"destination" : [ "obj-26", 0 ]
 			}
 
 		}
@@ -295,15 +331,50 @@ Copy and paste the contents of the file below into an open Max patcher.
 		}
 , 		{
 			"patchline" : 			{
-				"source" : [ "obj-6", 2 ],
+				"source" : [ "obj-17", 0 ],
+				"destination" : [ "obj-2", 0 ]
+			}
+
+		}
+, 		{
+			"patchline" : 			{
+				"source" : [ "obj-11", 0 ],
+				"destination" : [ "obj-17", 0 ]
+			}
+
+		}
+, 		{
+			"patchline" : 			{
+				"source" : [ "obj-17", 2 ],
 				"destination" : [ "obj-21", 0 ]
 			}
 
 		}
 , 		{
 			"patchline" : 			{
-				"source" : [ "obj-6", 1 ],
-				"destination" : [ "obj-14", 0 ]
+				"source" : [ "obj-26", 1 ],
+				"destination" : [ "obj-30", 0 ]
+			}
+
+		}
+, 		{
+			"patchline" : 			{
+				"source" : [ "obj-26", 0 ],
+				"destination" : [ "obj-28", 0 ]
+			}
+
+		}
+, 		{
+			"patchline" : 			{
+				"source" : [ "obj-6", 3 ],
+				"destination" : [ "obj-26", 0 ]
+			}
+
+		}
+, 		{
+			"patchline" : 			{
+				"source" : [ "obj-6", 0 ],
+				"destination" : [ "obj-2", 0 ]
 			}
 
 		}
@@ -316,8 +387,15 @@ Copy and paste the contents of the file below into an open Max patcher.
 		}
 , 		{
 			"patchline" : 			{
-				"source" : [ "obj-6", 0 ],
-				"destination" : [ "obj-2", 0 ]
+				"source" : [ "obj-6", 1 ],
+				"destination" : [ "obj-14", 0 ]
+			}
+
+		}
+, 		{
+			"patchline" : 			{
+				"source" : [ "obj-6", 2 ],
+				"destination" : [ "obj-21", 0 ]
 			}
 
 		}
