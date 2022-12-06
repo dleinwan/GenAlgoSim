@@ -34,7 +34,7 @@ class Organism:
         #TODO: randomize genes
         #
         #example
-        randomNum = random.randrange(1, 10)
+        randomNum = random.randrange(1, 3)
         self.genes = [randomNum]
         pass
 
@@ -45,7 +45,7 @@ class Population:
 
     def __init__(self):
         self.organisms = []
-        self. size = 200
+        self. size = 100
         for i in range(self.size):
             self.organisms.append(Organism(self.size))
         pass
@@ -94,7 +94,7 @@ def main():
         #play midi
         playFitness(genNum, currGeneration)
         # wait until last generation's music is done
-        input("press enter to continue")
+        #input("press enter to continue")
 
         pass
 
@@ -111,7 +111,7 @@ def computeFitness(genNum, currGen):
     #
     #example
     for organism in currGen.organisms:
-        organism.fitness = organism.genes[0] % random.randrange(1,50) #random number to mod by 
+        organism.fitness = organism.genes[0] % random.randrange(1,25) #random number to mod by 
         #print("fit: " + str(organism.fitness))
         # note: if your fitness calculation is the exact same every time, convergence will happen very quickly
     pass
@@ -133,8 +133,8 @@ def crossover(genNum, currGen):
         # if size=200, parOne (first parent) from 149-199
         parTwo = parOne - 50  #parent two index
         #if size=200, replace lowest 100 with children of parents
-        childOne = parOne - 199
-        childTwo = parOne - 198
+        childOne = parOne - (currGen.size - 1)
+        childTwo = parOne - (currGen.size - 2)
         currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
         currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
         pass
@@ -194,7 +194,7 @@ def playFitness(genNum, currGen):
         #if (i % 2):
         client.send_message("midi", organism.fitness)
         client.send_message("orgNum", i)
-        time.sleep(.05)
+        time.sleep(.02)
 
 #################################################################################################################
 
