@@ -5,8 +5,6 @@ Genetic Algorithm for music generation
 import random  
 import matplotlib.pyplot as plt (optional for plotting fitness in graph)  
 import time  
-import argparse  
-import datetime  
 from pythonosc import udp_client
 
 ## tutorial Python OSC to Max
