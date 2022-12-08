@@ -59,7 +59,7 @@ def main():
 
     #TODO: decide on number of generations to run for
     #number of generations algorithm will run for
-    numGens = 20
+    numGens = 200
 
     print("Beginning of Generations")
     currGeneration = Population()
@@ -68,6 +68,8 @@ def main():
     computeFitness(0, currGeneration)
 
     printFitnessOneLine(0, currGeneration)
+    playFitness(0, currGeneration)
+
     #plotFitness(0, currGeneration)
 
     for genNum in range(1, numGens + 1):
@@ -144,7 +146,7 @@ def crossover(genNum, currGen):
 
 def mutation(genNum, currGen):
     #print("Mutating " + str(genNum))
-    numMutated = currGen.size / 8
+    numMutated = currGen.size / 25
     for i in range(1, int(numMutated)):
         randomNum = random.randrange(0, currGen.size)
         currGen.organisms[randomNum].genes[0] = random.randrange(1, int(currGen.size/2))
@@ -200,7 +202,7 @@ def playFitness(genNum, currGen):
         #if (i % 2):
         client.send_message("midi", organism.fitness)
         client.send_message("orgNum", i)
-        time.sleep(.02)
+        time.sleep(.01)
     playing = 0
     client.send_message("playing", playing)
 
