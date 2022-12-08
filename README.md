@@ -3,7 +3,7 @@ Genetic Algorithm for music generation
 
 ## Dependencies
 import random  
-import matplotlib.pyplot as plt (optional for plotting fitness in graph)
+import matplotlib.pyplot as plt (optional for plotting fitness in graph)  
 import time  
 import argparse  
 import datetime  
