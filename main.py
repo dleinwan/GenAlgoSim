@@ -16,6 +16,9 @@ import random
 import matplotlib.pyplot as plt
 import time
 
+#from tkinter import *
+
+
 from pythonosc import udp_client
 
 
@@ -55,9 +58,16 @@ class Population:
 
 def main():
 
+    # window = Tk()
+    # window.title("ayyyyyeeeee")
+    # lb = Label(window, text="ayyyeeee")
+    # lb.place(x=15, y=21)
+    # window.mainloop()
+
+
     #TODO: decide on number of generations to run for
     #number of generations algorithm will run for
-    numGens = 200
+    numGens = 2000
 
     print("Beginning of Generations")
     currGeneration = Population()
@@ -67,6 +77,8 @@ def main():
 
     printFitnessOneLine(0, currGeneration)
     playFitness(0, currGeneration)
+
+    
 
     #plotFitness(0, currGeneration)
 
@@ -200,7 +212,7 @@ def playFitness(genNum, currGen):
         #if (i % 2):
         client.send_message("midi", organism.fitness)
         client.send_message("orgNum", i)
-        time.sleep(.01)
+        time.sleep(.0001)
     playing = 0
     client.send_message("playing", playing)
 
