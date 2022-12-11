@@ -31,7 +31,7 @@ class Organism:
 
     def __init__(self, size):
         #TODO: randomize fitness
-        self.fitness = random.randrange(1, 6)
+        self.fitness = random.randrange(1, 2)
         #TODO: randomize genes
         #
         #example
@@ -46,7 +46,7 @@ class Population:
 
     def __init__(self):
         self.organisms = []
-        self. size = 100
+        self.size = 100
         for i in range(self.size):
             self.organisms.append(Organism(self.size))
         pass
@@ -67,7 +67,7 @@ def main():
 
     #TODO: decide on number of generations to run for
     #number of generations algorithm will run for
-    numGens = 2000
+    numGens = 2
 
     print("Beginning of Generations")
     currGeneration = Population()
@@ -98,7 +98,7 @@ def main():
 
         # show fitness
         findAvgFitness(genNum, currGeneration)
-        printFitnessOneLine(genNum, currGeneration)
+        # printFitnessOneLine(genNum, currGeneration)
         #printFitnessOneLine(genNum, currGeneration)
         #plotFitness(genNum, currGeneration)
 
@@ -124,8 +124,9 @@ def computeFitness(genNum, currGen):
     #
     #example
     for organism in currGen.organisms:
-        organism.fitness = organism.genes[0] % random.randrange(1,200) #random number to mod by 
-        #print("fit: " + str(organism.fitness))
+        randNum = random.randrange(1, 200)
+        organism.fitness = organism.genes[0] % randNum #random number to mod by 
+        # print(f'Type(Organism) genes: {organism.genes[0]}, fit:  {str(organism.fitness)}, randNum: {randNum}')
         # note: if your fitness calculation is the exact same every time, convergence will happen very quickly
     pass
     
@@ -135,6 +136,7 @@ def selection(genNum, currGen):
     #
     #example
     currGen.organisms.sort(key=lambda x: x.fitness, reverse=False) #sort population list by fitness
+    print (f'Number of organisms post selection: {len(currGen.organisms)}')
     pass
 
 def crossover(genNum, currGen):
@@ -144,13 +146,14 @@ def crossover(genNum, currGen):
     orgPerP = currGen.size / 4  #organisms per 25th percentile
     for parOne in range(int((currGen.size * 3/4)) - 1, currGen.size):
         # if size=200, parOne (first parent) from 149-199
-        parTwo = parOne - 50  #parent two index
+        parTwo = parOne - orgPerP  #parent two index
         #if size=200, replace lowest 100 with children of parents
         childOne = parOne - (currGen.size - 1)
         childTwo = parOne - (currGen.size - 2)
         currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
         currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
         pass
+    print (f'Number of organisms post crossover: {len(currGen.organisms)}')
     pass
 
 
@@ -212,7 +215,7 @@ def playFitness(genNum, currGen):
         #if (i % 2):
         client.send_message("midi", organism.fitness)
         client.send_message("orgNum", i)
-        time.sleep(.0001)
+        time.sleep(.01)
     playing = 0
     client.send_message("playing", playing)
 
