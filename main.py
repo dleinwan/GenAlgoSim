@@ -31,7 +31,7 @@ class Organism:
 
     def __init__(self, size):
         #TODO: randomize fitness
-        self.fitness = random.randrange(1, 2)
+        self.fitness = random.randrange(1, 5)
         #TODO: randomize genes
         #
         #example
