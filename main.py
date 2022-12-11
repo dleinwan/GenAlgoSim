@@ -35,8 +35,8 @@ class Organism:
         #TODO: randomize genes
         #
         #example
-        randomNum1 = random.randrange(1, 2)
-        randomNum2 = random.randrange(1, 2)
+        randomNum1 = random.randrange(1, 3)
+        randomNum2 = random.randrange(1, 50)
         # genes = [frequency, duration]
         self.genes = [randomNum1, randomNum2]
         pass
@@ -154,8 +154,8 @@ def crossover(genNum, currGen):
         currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
         currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
         #crossover second gene in array
-        currGen.organisms[childOne].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 3)) % 100 # make this value a percentage, so can be translated to between 0 and 1 during playback
-        currGen.organisms[childTwo].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 2)) % 100
+        currGen.organisms[childOne].genes[1] = (currGen.organisms[parOne].genes[1] + 1)
+        currGen.organisms[childTwo].genes[1] = (currGen.organisms[parTwo].genes[1] + 1) 
         pass
     pass
 
@@ -229,7 +229,7 @@ def playFitness(genNum, currGen):
         #if (i % 2):
         client.send_message("midi", organism.fitness)
         client.send_message("orgNum", i)
-        time.sleep(organism.genes[1]/1000)
+        time.sleep(organism.genes[1]/100000)
     playing = 0
     client.send_message("playing", playing)
 
