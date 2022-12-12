@@ -1,5 +1,6 @@
 # GenAlgo
-Genetic Algorithm for music generation
+Genetic Algorithm for music generation 
+Based on GenAlgo framework here https://github.com/dleinwan/GenAlgo.git
 
 ## Dependencies
 import random  
