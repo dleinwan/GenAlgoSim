@@ -194,7 +194,7 @@ def crossover(genNum, currGen, base_midi=1):
 
 def mutation(genNum, currGen):
     #print("Mutating " + str(genNum))
-    numMutated = currGen.size / 40
+    numMutated = currGen.size / 10
     for i in range(1, int(numMutated)):
         randomNum = random.randrange(0, currGen.size)
         currGen.organisms[randomNum].genes[0] = random.randrange(1, int(currGen.size/2))
