@@ -83,7 +83,7 @@ def main():
     #TODO: compute fitness
     computeFitness(0, currGeneration)
 
-    printFitnessOneLine(0, currGeneration)
+    # printFitnessOneLine(0, currGeneration)
     playFitness(0, currGeneration)
 
     
@@ -139,36 +139,15 @@ def genArpeggioMap(midi):
             n += 12
     return base_notes
 
-def computeFitness(genNum, currGen):
+def computeFitness(genNum, currGen, base_midi=1):
     #print("Computing Fitness for generation " + str(genNum))
-    base_midi = random.randrange(1, 11)
     arp_notes = genArpeggioMap(base_midi)
     for organism in currGen.organisms:
-        # print (f'Organism genes: {organism.genes[0]}, arp_notes: {arp_notes}')
         organism.fitness = 1 if organism.genes[0] in arp_notes else 0
-        # print (f'Organism fitness: {organism.fitness}')
-        # randNum = random.randrange(1, 200)
-        # organism.fitness = min(organism.genes[0] % randNum, 10) #random number to mod by 
-        # print(f'Type(Organism) genes: {organism.genes[0]}, fit:  {str(organism.fitness)}, randNum: {randNum}')
-        # note: if your fitness calculation is the exact same every time, convergence will happen very quickly
     pass
-    
-
-def sort_matrix(fitness_array, midi_array, orgs):
-    ones_loc = np.where(fitness_array == 1)[0]
-    zeros_loc = np.where(fitness_array == 0)[0]
-    ones_orgs = orgs[ones_loc]
-    zeros_orgs = orgs[zeros_loc]
-    ones_orgs_sorted = []
-    ones_midi_sorted = []
-
-    # Sort ones
-    for i, org in enumerate(ones_orgs):
-        # Sort based on midi
-        midi = midi_array[i]
 
 
-def selection(genNum, currGen):
+def selection(genNum, currGen, base_midi=1):
     #print("Selecting best performers " + str(genNum))
     
     # Sort array by fitness and midi value with lowest value first.
@@ -183,32 +162,20 @@ def selection(genNum, currGen):
     # print (f'prev: {matrix}')
     # [print (f'prev: {t[1]}, {t[0]}') for t in list(matrix)]
     matrix = sorted(matrix, key=lambda x: x[0], reverse=False)
-    print (matrix[0][1])
+    # print (matrix[0][1])
     currGen.organisms = [t[1] for t in matrix]
-    print (f'pre extended: {len(currGen.organisms)}')
+    # print (f'pre extended: {len(currGen.organisms)}')
     currGen.organisms.extend(list(zeros_orgs))
-    print (f'post extended: {len(currGen.organisms)}')
+    # print (f'post extended: {len(currGen.organisms)}')
 
     pass
 
-# Write a function that reads matrix from above function and sort it at 2 levels. 
-# First level of sorting is by fitness with 1's first. 
-# The second level of sorting (sub-sorting while maintaining the fitness-based sorting) is based on MIDI in ascending order.
 
-# def sort_matrix(matrix):
-#     # Sort matrix by fitness
-#     matrix = sorted(matrix, key=lambda x: x[0], reverse=False)
-#     # Sort matrix by MIDI
-#     matrix = sorted(matrix, key=lambda x: x[1], reverse=False)
-#     return matrix
-
-
-def crossover(genNum, currGen):
+def crossover(genNum, currGen, base_midi=1):
     #print("Crossing over " + str(genNum))
     #
     #example: the top 75-100 percentile and 50-75 percentile make two children each
     orgPerP = currGen.size / 4  #organisms per 25th percentile
-    print (f'orgPerP: {orgPerP}')
     for parOne in range(int((currGen.size * 3/4)) - 1, currGen.size):
         # if size=200, parOne (first parent) from 149-199
         parTwo = int(parOne - orgPerP)  #parent two index
@@ -216,8 +183,10 @@ def crossover(genNum, currGen):
         childOne = int(parOne - (currGen.size - 1))
         childTwo = int(parOne - (currGen.size - 2))
         # print (f'parOne: {parOne}, parTwo: {parTwo}, childOne: {childOne}, childTwo: {childTwo}, len: {len(list(currGen.organisms))}')
-        currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0])//2 #% (currGen.size/2)
-        currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0])//2 #% (currGen.size/4)
+        currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0])//3 #% (currGen.size/2)
+        currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0])//3 #% (currGen.size/4)
+        currGen.organisms[childOne].fitness = 1 if currGen.organisms[childOne].genes[0] in genArpeggioMap(base_midi) else 0
+        currGen.organisms[childTwo].fitness = 1 if currGen.organisms[childTwo].genes[0] in genArpeggioMap(base_midi) else 0
         pass
     print (f'Number of organisms post crossover: {len(currGen.organisms)}')
     pass
@@ -225,7 +194,7 @@ def crossover(genNum, currGen):
 
 def mutation(genNum, currGen):
     #print("Mutating " + str(genNum))
-    numMutated = currGen.size / 10
+    numMutated = currGen.size / 40
     for i in range(1, int(numMutated)):
         randomNum = random.randrange(0, currGen.size)
         currGen.organisms[randomNum].genes[0] = random.randrange(1, int(currGen.size/2))
