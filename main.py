@@ -252,7 +252,7 @@ def playFitness(genNum, currGen):
         # print (f'playing: {organism.genes}')
         client.send_message("midi", organism.genes[0])
         client.send_message("orgNum", i)
-        time.sleep(.01)
+        time.sleep(.05)
     playing = 0
     client.send_message("playing", playing)
 
