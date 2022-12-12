@@ -15,6 +15,7 @@
 import random
 import matplotlib.pyplot as plt
 import time
+import numpy as np
 
 #from tkinter import *
 
@@ -31,22 +32,22 @@ class Organism:
 
     def __init__(self, size):
         #TODO: randomize fitness
-        self.fitness = random.randrange(1, 2)
+        self.midi = random.randrange(1, 50)
         #TODO: randomize genes
         #
         #example
-        randomNum = random.randrange(1, 2)
+        randomNum = random.randrange(1, 50)
         self.genes = [randomNum]
         pass
 
 class Population:
     organisms = []
     #TODO: decide on population size
-    size = 200 #make sure divisible by 4
+    size = 60 #make sure divisible by 4
 
     def __init__(self):
         self.organisms = []
-        self.size = 100
+        self.size = 60
         for i in range(self.size):
             self.organisms.append(Organism(self.size))
         pass
@@ -67,7 +68,7 @@ def main():
 
     #TODO: decide on number of generations to run for
     #number of generations algorithm will run for
-    numGens = 2
+    numGens = 200
 
     print("Beginning of Generations")
     currGeneration = Population()
@@ -119,13 +120,27 @@ def main():
 # FUNCTIONS
 
 
+def genArpeggioMap(midi):
+    """
+    Input base note to generate a M7 arpeggio map. ie, all notes across permissible octaves falling in the arpeggio
+    """
+    base_notes = [midi, midi + 4, midi + 7, midi + 10]
+    for note in base_notes:
+        n = note + 12
+        while n <= 127:
+            base_notes.append(n)
+            n += 12
+    return base_notes
+
 def computeFitness(genNum, currGen):
     #print("Computing Fitness for generation " + str(genNum))
-    #
-    #example
+    base_midi = random.randrange(1, 11)
+    arp_notes = genArpeggioMap(base_midi)
     for organism in currGen.organisms:
-        randNum = random.randrange(1, 200)
-        organism.fitness = organism.genes[0] % randNum #random number to mod by 
+        organism.fitness = 1 if organism.midi in arp_notes else 0
+        # print (f'Organism fitness: {organism.fitness}')
+        # randNum = random.randrange(1, 200)
+        # organism.fitness = min(organism.genes[0] % randNum, 10) #random number to mod by 
         # print(f'Type(Organism) genes: {organism.genes[0]}, fit:  {str(organism.fitness)}, randNum: {randNum}')
         # note: if your fitness calculation is the exact same every time, convergence will happen very quickly
     pass
@@ -133,10 +148,22 @@ def computeFitness(genNum, currGen):
 
 def selection(genNum, currGen):
     #print("Selecting best performers " + str(genNum))
-    #
-    #example
-    currGen.organisms.sort(key=lambda x: x.fitness, reverse=False) #sort population list by fitness
-    print (f'Number of organisms post selection: {len(currGen.organisms)}')
+    
+    # Sort array by fitness and midi value with lowest value first.
+    # Retrieve organisms with fitness == 1
+    fitness_array = [org.fitness for org in currGen.organisms]
+    midi_array = [org.midi for org in currGen.organisms]
+    orgs = [org for org in currGen.organisms]
+    matrix = zip(fitness_array, midi_array, orgs)
+    # [print (t) for t in list(matrix)]
+    matrix = sorted(matrix, key=lambda x: (x[0], x[1]), reverse=False)
+    # Extract a list containing all organism objects in test
+    currGen.organisms = [t[2] for t in matrix]
+
+    # [print (f'prev: {org.midi}') for org in currGen.organisms]
+    # currGen.organisms.sort(key=lambda x: x.fitness, reverse=False) #sort population list by fitness
+    # [print (f'post: {org.midi}') for org in currGen.organisms]
+    # print (f'Number of organisms post selection: {len(currGen.organisms)}')
     pass
 
 def crossover(genNum, currGen):
@@ -146,10 +173,10 @@ def crossover(genNum, currGen):
     orgPerP = currGen.size / 4  #organisms per 25th percentile
     for parOne in range(int((currGen.size * 3/4)) - 1, currGen.size):
         # if size=200, parOne (first parent) from 149-199
-        parTwo = parOne - orgPerP  #parent two index
+        parTwo = int(parOne - orgPerP)  #parent two index
         #if size=200, replace lowest 100 with children of parents
-        childOne = parOne - (currGen.size - 1)
-        childTwo = parOne - (currGen.size - 2)
+        childOne = int(parOne - (currGen.size - 1))
+        childTwo = int(parOne - (currGen.size - 2))
         currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
         currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
         pass
@@ -208,12 +235,14 @@ def playFitness(genNum, currGen):
     client.send_message("playing", playing)
     client.send_message("genNum", genNum)
     i = 0
+    # print  (genNum)
     for organism in currGen.organisms:
         playing = 1
         client.send_message("playing", playing)
         i = i + 1
         #if (i % 2):
-        client.send_message("midi", organism.fitness)
+        print (f'playing: {organism.midi}')
+        client.send_message("midi", organism.midi)
         client.send_message("orgNum", i)
         time.sleep(.01)
     playing = 0
