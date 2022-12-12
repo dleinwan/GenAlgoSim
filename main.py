@@ -31,23 +31,30 @@ class Organism:
     fitness = 0
 
     def __init__(self, size):
-        #TODO: randomize fitness
-        self.midi = random.randrange(1, 50)
+        
         #TODO: randomize genes
-        #
         #example
-        randomNum = random.randrange(1, 50)
-        self.genes = [randomNum]
+        midi = random.randrange(1, 50)
+        self.genes = [midi]
+        self.compute_init_fitness()
         pass
+
+    def compute_init_fitness(self):
+        arp_notes = genArpeggioMap(1)
+        # print (f'self genes: {self.genes}, arp_notes: {arp_notes}')
+        self.fitness = 1 if self.genes[0] in arp_notes else 0
+        print (self.fitness)
+        pass
+
 
 class Population:
     organisms = []
     #TODO: decide on population size
-    size = 60 #make sure divisible by 4
+    size = 200 #make sure divisible by 4
 
     def __init__(self):
         self.organisms = []
-        self.size = 60
+        self.size = 100
         for i in range(self.size):
             self.organisms.append(Organism(self.size))
         pass
@@ -99,7 +106,7 @@ def main():
 
         # show fitness
         findAvgFitness(genNum, currGeneration)
-        # printFitnessOneLine(genNum, currGeneration)
+        printFitnessOneLine(genNum, currGeneration)
         #printFitnessOneLine(genNum, currGeneration)
         #plotFitness(genNum, currGeneration)
 
@@ -127,7 +134,7 @@ def genArpeggioMap(midi):
     base_notes = [midi, midi + 4, midi + 7, midi + 10]
     for note in base_notes:
         n = note + 12
-        while n <= 127:
+        while n <= 67:
             base_notes.append(n)
             n += 12
     return base_notes
@@ -137,7 +144,8 @@ def computeFitness(genNum, currGen):
     base_midi = random.randrange(1, 11)
     arp_notes = genArpeggioMap(base_midi)
     for organism in currGen.organisms:
-        organism.fitness = 1 if organism.midi in arp_notes else 0
+        # print (f'Organism genes: {organism.genes[0]}, arp_notes: {arp_notes}')
+        organism.fitness = 1 if organism.genes[0] in arp_notes else 0
         # print (f'Organism fitness: {organism.fitness}')
         # randNum = random.randrange(1, 200)
         # organism.fitness = min(organism.genes[0] % randNum, 10) #random number to mod by 
@@ -146,39 +154,70 @@ def computeFitness(genNum, currGen):
     pass
     
 
+def sort_matrix(fitness_array, midi_array, orgs):
+    ones_loc = np.where(fitness_array == 1)[0]
+    zeros_loc = np.where(fitness_array == 0)[0]
+    ones_orgs = orgs[ones_loc]
+    zeros_orgs = orgs[zeros_loc]
+    ones_orgs_sorted = []
+    ones_midi_sorted = []
+
+    # Sort ones
+    for i, org in enumerate(ones_orgs):
+        # Sort based on midi
+        midi = midi_array[i]
+
+
 def selection(genNum, currGen):
     #print("Selecting best performers " + str(genNum))
     
     # Sort array by fitness and midi value with lowest value first.
     # Retrieve organisms with fitness == 1
-    fitness_array = [org.fitness for org in currGen.organisms]
-    midi_array = [org.midi for org in currGen.organisms]
-    orgs = [org for org in currGen.organisms]
-    matrix = zip(fitness_array, midi_array, orgs)
-    # [print (t) for t in list(matrix)]
-    matrix = sorted(matrix, key=lambda x: (x[0], x[1]), reverse=False)
-    # Extract a list containing all organism objects in test
-    currGen.organisms = [t[2] for t in matrix]
+    fitness_array = np.array([org.fitness for org in currGen.organisms])
+    midi_array = np.array([org.genes[0] for org in currGen.organisms])
+    orgs = np.array([org for org in currGen.organisms])
+    ones_orgs = orgs[np.where(fitness_array == 1)[0]]
+    zeros_orgs = orgs[np.where(fitness_array == 0)[0]]
+    ones_midi = midi_array[np.where(fitness_array == 1)[0]]
+    matrix = list(zip(ones_midi, ones_orgs))
+    # print (f'prev: {matrix}')
+    # [print (f'prev: {t[1]}, {t[0]}') for t in list(matrix)]
+    matrix = sorted(matrix, key=lambda x: x[0], reverse=False)
+    print (matrix[0][1])
+    currGen.organisms = [t[1] for t in matrix]
+    print (f'pre extended: {len(currGen.organisms)}')
+    currGen.organisms.extend(list(zeros_orgs))
+    print (f'post extended: {len(currGen.organisms)}')
 
-    # [print (f'prev: {org.midi}') for org in currGen.organisms]
-    # currGen.organisms.sort(key=lambda x: x.fitness, reverse=False) #sort population list by fitness
-    # [print (f'post: {org.midi}') for org in currGen.organisms]
-    # print (f'Number of organisms post selection: {len(currGen.organisms)}')
     pass
+
+# Write a function that reads matrix from above function and sort it at 2 levels. 
+# First level of sorting is by fitness with 1's first. 
+# The second level of sorting (sub-sorting while maintaining the fitness-based sorting) is based on MIDI in ascending order.
+
+# def sort_matrix(matrix):
+#     # Sort matrix by fitness
+#     matrix = sorted(matrix, key=lambda x: x[0], reverse=False)
+#     # Sort matrix by MIDI
+#     matrix = sorted(matrix, key=lambda x: x[1], reverse=False)
+#     return matrix
+
 
 def crossover(genNum, currGen):
     #print("Crossing over " + str(genNum))
     #
     #example: the top 75-100 percentile and 50-75 percentile make two children each
     orgPerP = currGen.size / 4  #organisms per 25th percentile
+    print (f'orgPerP: {orgPerP}')
     for parOne in range(int((currGen.size * 3/4)) - 1, currGen.size):
         # if size=200, parOne (first parent) from 149-199
         parTwo = int(parOne - orgPerP)  #parent two index
         #if size=200, replace lowest 100 with children of parents
         childOne = int(parOne - (currGen.size - 1))
         childTwo = int(parOne - (currGen.size - 2))
-        currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
-        currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
+        # print (f'parOne: {parOne}, parTwo: {parTwo}, childOne: {childOne}, childTwo: {childTwo}, len: {len(list(currGen.organisms))}')
+        currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0])//2 #% (currGen.size/2)
+        currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0])//2 #% (currGen.size/4)
         pass
     print (f'Number of organisms post crossover: {len(currGen.organisms)}')
     pass
@@ -186,7 +225,7 @@ def crossover(genNum, currGen):
 
 def mutation(genNum, currGen):
     #print("Mutating " + str(genNum))
-    numMutated = currGen.size / 25
+    numMutated = currGen.size / 10
     for i in range(1, int(numMutated)):
         randomNum = random.randrange(0, currGen.size)
         currGen.organisms[randomNum].genes[0] = random.randrange(1, int(currGen.size/2))
@@ -200,7 +239,7 @@ def printFitness(genNum, currGen):
 
 def printFitnessOneLine(genNum, currGen):
     for organism in currGen.organisms:
-        print(int(organism.fitness), end=' ')
+        print(f'{int(organism.fitness)}', end=' ')
     pass
 
 def plotFitness(genNum, currGen):
@@ -224,7 +263,7 @@ def findAvgFitness(genNum, currGen):
     for organism in currGen.organisms:
         total = total + organism.genes[0]
     avgFitness = total / currGen.size
-    print("Gen " + str(genNum) + " Avg Fit: " + str(avgFitness))
+    print(f'Gen {str(genNum)} Avg Fit: {str(avgFitness)}')
 
 def playFitness(genNum, currGen):
     IP = "127.0.0.1"
@@ -241,8 +280,8 @@ def playFitness(genNum, currGen):
         client.send_message("playing", playing)
         i = i + 1
         #if (i % 2):
-        print (f'playing: {organism.midi}')
-        client.send_message("midi", organism.midi)
+        # print (f'playing: {organism.genes}')
+        client.send_message("midi", organism.genes[0])
         client.send_message("orgNum", i)
         time.sleep(.01)
     playing = 0
