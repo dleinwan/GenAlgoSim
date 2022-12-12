@@ -212,7 +212,7 @@ def playFitness(genNum, currGen):
         #if (i % 2):
         client.send_message("midi", organism.fitness)
         client.send_message("orgNum", i)
-        time.sleep(.0001)
+        time.sleep(.01)
     playing = 0
     client.send_message("playing", playing)
 
