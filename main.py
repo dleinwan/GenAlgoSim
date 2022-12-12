@@ -154,8 +154,8 @@ def crossover(genNum, currGen):
         currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
         currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
         #crossover second gene in array
-        currGen.organisms[childOne].genes[1] = (currGen.organisms[parOne].genes[1] + 1)
-        currGen.organisms[childTwo].genes[1] = (currGen.organisms[parTwo].genes[1] + 1) 
+        currGen.organisms[childOne].genes[1] = (currGen.organisms[parOne].genes[1] + 2)
+        currGen.organisms[childTwo].genes[1] = (currGen.organisms[parTwo].genes[1] + 2) 
         pass
     pass
 
