@@ -126,12 +126,14 @@ def computeFitness(genNum, currGen):
     #print("Computing Fitness for generation " + str(genNum))
     #
     #example
-    exception = [1,3,6,8,10,13,15,18,20,22]
+    #exception = [1,3,6,8,10,13,15,18,20,22]
+    scale = [0,3,5,6,7,10,12,15,17,18,18,19,22,24]
+    exception = [1,2,4,8,9,11,13,14,16,20,21,23]
     for organism in currGen.organisms:
         #organism.fitness = organism.genes[0] % random.randrange(1,200) #random number to mod by
         organism.fitness = organism.genes[0] % 24
         if organism.fitness in exception:
-                organism.fitness += 1
+                organism.fitness = scale[random.randrange(0,13)]
         
         #print("fit: " + str(organism.fitness))
         # note: if your fitness calculation is the exact same every time, convergence will happen very quickly
@@ -158,7 +160,7 @@ def crossover(genNum, currGen):
         childTwo = parOne - (currGen.size - 2)
         #crossover first gene in array
         currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
-        currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
+        currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] - currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
         #crossover second gene in array
         currGen.organisms[childOne].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 3)) % 100 # make this value a percentage, so can be translated to between 0 and 1 during playback
         currGen.organisms[childTwo].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 2)) % 100
@@ -238,7 +240,7 @@ def playFitness(genNum, currGen):
         #if (i % 2):
         client.send_message("midi", organism.fitness)
         client.send_message("orgNum", i)
-        time.sleep(organism.genes[1]/80)
+        time.sleep(organism.genes[1]/300)
     playing = 0
     client.send_message("playing", playing)
 
