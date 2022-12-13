@@ -1,16 +1,18 @@
 Copy and paste the contents of the file below into an open Max patcher.
 
-
 {
 	"boxes" : [ 		{
 			"box" : 			{
 				"maxclass" : "comment",
 				"text" : "START / reset",
 				"linecount" : 2,
+				"presentation_linecount" : 2,
+				"presentation_rect" : [ 54.816091418266296, 21.866667449474335, 52.0, 33.0 ],
 				"id" : "obj-12",
-				"patching_rect" : [ 70.016096413135529, 474.0, 52.0, 33.0 ],
 				"numinlets" : 1,
-				"numoutlets" : 0
+				"numoutlets" : 0,
+				"presentation" : 1,
+				"patching_rect" : [ 246.016096413135529, 519.0, 52.0, 33.0 ]
 			}
 
 		}
@@ -18,11 +20,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "newobj",
 				"text" : "t b b",
-				"outlettype" : [ "bang", "bang" ],
 				"id" : "obj-9",
-				"patching_rect" : [ 30.0, 393.0, 32.0, 22.0 ],
 				"numinlets" : 1,
-				"numoutlets" : 2
+				"numoutlets" : 2,
+				"outlettype" : [ "bang", "bang" ],
+				"patching_rect" : [ 54.0, 496.0, 32.0, 22.0 ]
 			}
 
 		}
@@ -31,22 +33,27 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"maxclass" : "comment",
 				"text" : "(volume first) ",
 				"linecount" : 2,
+				"presentation_linecount" : 2,
+				"presentation_rect" : [ 54.816091418266296, 56.866667449474335, 52.333333253860474, 33.0 ],
 				"id" : "obj-7",
-				"patching_rect" : [ 128.5, 474.0, 55.0, 33.0 ],
 				"numinlets" : 1,
-				"numoutlets" : 0
+				"numoutlets" : 0,
+				"presentation" : 1,
+				"patching_rect" : [ 304.5, 519.0, 55.0, 33.0 ]
 			}
 
 		}
 , 		{
 			"box" : 			{
 				"maxclass" : "button",
-				"outlettype" : [ "bang" ],
+				"presentation_rect" : [ 23.799995005130768, 21.866667449474335, 24.0, 24.0 ],
 				"id" : "obj-3",
-				"patching_rect" : [ 39.0, 474.0, 24.0, 24.0 ],
+				"parameter_enable" : 0,
 				"numinlets" : 1,
 				"numoutlets" : 1,
-				"parameter_enable" : 0
+				"presentation" : 1,
+				"outlettype" : [ "bang" ],
+				"patching_rect" : [ 215.0, 519.0, 24.0, 24.0 ]
 			}
 
 		}
@@ -54,11 +61,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "message",
 				"text" : "1",
-				"outlettype" : [ "" ],
 				"id" : "obj-30",
-				"patching_rect" : [ 88.0, 330.736847281455994, 29.5, 22.0 ],
 				"numinlets" : 2,
-				"numoutlets" : 1
+				"numoutlets" : 1,
+				"outlettype" : [ "" ],
+				"patching_rect" : [ 169.0, 432.0, 29.5, 22.0 ]
 			}
 
 		}
@@ -66,11 +73,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "message",
 				"text" : "0",
-				"outlettype" : [ "" ],
 				"id" : "obj-28",
-				"patching_rect" : [ 54.0, 330.736847281455994, 29.5, 22.0 ],
 				"numinlets" : 2,
-				"numoutlets" : 1
+				"numoutlets" : 1,
+				"outlettype" : [ "" ],
+				"patching_rect" : [ 124.0, 432.0, 29.5, 22.0 ]
 			}
 
 		}
@@ -78,11 +85,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "newobj",
 				"text" : "sel 0 1",
-				"outlettype" : [ "bang", "bang", "" ],
 				"id" : "obj-26",
-				"patching_rect" : [ 54.0, 298.0, 44.0, 22.0 ],
 				"numinlets" : 3,
-				"numoutlets" : 3
+				"numoutlets" : 3,
+				"outlettype" : [ "bang", "bang", "" ],
+				"patching_rect" : [ 119.0, 342.0, 44.0, 22.0 ]
 			}
 
 		}
@@ -91,9 +98,9 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"maxclass" : "comment",
 				"text" : "reset values",
 				"id" : "obj-25",
-				"patching_rect" : [ 194.20000371336937, 16.800000250339508, 75.599998891353607, 20.0 ],
 				"numinlets" : 1,
-				"numoutlets" : 0
+				"numoutlets" : 0,
+				"patching_rect" : [ 194.20000371336937, 16.800000250339508, 75.599998891353607, 20.0 ]
 			}
 
 		}
@@ -101,34 +108,38 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "comment",
 				"text" : "organism number",
+				"presentation_rect" : [ 149.600002467632294, 79.200001120567322, 109.199999392032623, 20.0 ],
 				"id" : "obj-23",
-				"patching_rect" : [ 433.600006461143494, 91.200001358985901, 109.199999392032623, 20.0 ],
 				"numinlets" : 1,
-				"numoutlets" : 0
+				"numoutlets" : 0,
+				"presentation" : 1,
+				"patching_rect" : [ 433.600006461143494, 91.200001358985901, 109.199999392032623, 20.0 ]
 			}
 
 		}
 , 		{
 			"box" : 			{
 				"maxclass" : "number",
-				"outlettype" : [ "", "bang" ],
+				"presentation_rect" : [ 171.200002670288086, 103.200001120567322, 50.0, 22.0 ],
 				"id" : "obj-21",
-				"patching_rect" : [ 447.200006663799286, 122.912672996520996, 50.0, 22.0 ],
+				"parameter_enable" : 0,
 				"numinlets" : 1,
 				"numoutlets" : 2,
-				"parameter_enable" : 0
+				"presentation" : 1,
+				"outlettype" : [ "", "bang" ],
+				"patching_rect" : [ 447.200006663799286, 122.912672996520996, 50.0, 22.0 ]
 			}
 
 		}
 , 		{
 			"box" : 			{
 				"maxclass" : "number",
-				"outlettype" : [ "", "bang" ],
 				"id" : "obj-19",
-				"patching_rect" : [ 355.600005805492401, 222.400003552436829, 50.0, 22.0 ],
+				"parameter_enable" : 0,
 				"numinlets" : 1,
 				"numoutlets" : 2,
-				"parameter_enable" : 0
+				"outlettype" : [ "", "bang" ],
+				"patching_rect" : [ 389.600005805492401, 238.400003552436829, 50.0, 22.0 ]
 			}
 
 		}
@@ -136,11 +147,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "newobj",
 				"text" : "t b f f f f",
-				"outlettype" : [ "bang", "float", "float", "float", "float" ],
 				"id" : "obj-17",
-				"patching_rect" : [ 212.000003159046173, 79.200001180171967, 61.0, 22.0 ],
 				"numinlets" : 1,
-				"numoutlets" : 5
+				"numoutlets" : 5,
+				"outlettype" : [ "bang", "float", "float", "float", "float" ],
+				"patching_rect" : [ 212.000003159046173, 79.200001180171967, 61.0, 22.0 ]
 			}
 
 		}
@@ -148,23 +159,27 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "comment",
 				"text" : "generation number",
+				"presentation_rect" : [ 149.600002467632294, 18.800000905990601, 109.466644644737244, 20.0 ],
 				"id" : "obj-16",
-				"patching_rect" : [ 311.200004637241364, 91.200001358985901, 109.466644644737244, 20.0 ],
 				"numinlets" : 1,
-				"numoutlets" : 0
+				"numoutlets" : 0,
+				"presentation" : 1,
+				"patching_rect" : [ 311.200004637241364, 91.200001358985901, 109.466644644737244, 20.0 ]
 			}
 
 		}
 , 		{
 			"box" : 			{
 				"maxclass" : "flonum",
-				"outlettype" : [ "", "bang" ],
+				"presentation_rect" : [ 172.000002801418304, 45.99999874830246, 50.0, 22.0 ],
 				"format" : 6,
 				"id" : "obj-14",
-				"patching_rect" : [ 333.600004971027374, 118.39999920129776, 50.0, 22.0 ],
+				"parameter_enable" : 0,
 				"numinlets" : 1,
 				"numoutlets" : 2,
-				"parameter_enable" : 0
+				"presentation" : 1,
+				"outlettype" : [ "", "bang" ],
+				"patching_rect" : [ 333.600004971027374, 118.39999920129776, 50.0, 22.0 ]
 			}
 
 		}
@@ -172,11 +187,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "message",
 				"text" : "0",
-				"outlettype" : [ "" ],
 				"id" : "obj-11",
-				"patching_rect" : [ 212.000003159046173, 44.000000655651093, 29.5, 22.0 ],
 				"numinlets" : 2,
-				"numoutlets" : 1
+				"numoutlets" : 1,
+				"outlettype" : [ "" ],
+				"patching_rect" : [ 212.000003159046173, 44.000000655651093, 29.5, 22.0 ]
 			}
 
 		}
@@ -185,21 +200,21 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"maxclass" : "comment",
 				"text" : "ADSR envelope",
 				"id" : "obj-4",
-				"patching_rect" : [ 305.200001060962677, 189.800001800060272, 96.0, 20.0 ],
 				"numinlets" : 1,
-				"numoutlets" : 0
+				"numoutlets" : 0,
+				"patching_rect" : [ 339.200001060962677, 205.800001800060272, 96.0, 20.0 ]
 			}
 
 		}
 , 		{
 			"box" : 			{
 				"maxclass" : "button",
-				"outlettype" : [ "bang" ],
 				"id" : "obj-268",
-				"patching_rect" : [ 417.866650104522705, 255.32875120639801, 24.0, 24.0 ],
+				"parameter_enable" : 0,
 				"numinlets" : 1,
 				"numoutlets" : 1,
-				"parameter_enable" : 0
+				"outlettype" : [ "bang" ],
+				"patching_rect" : [ 451.866650104522705, 271.32875120639801, 24.0, 24.0 ]
 			}
 
 		}
@@ -207,24 +222,24 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "newobj",
 				"text" : "line~",
-				"outlettype" : [ "signal", "bang" ],
 				"id" : "obj-266",
-				"patching_rect" : [ 478.199983437856076, 399.736807942390442, 34.0, 22.0 ],
 				"numinlets" : 2,
-				"numoutlets" : 2
+				"numoutlets" : 2,
+				"outlettype" : [ "signal", "bang" ],
+				"patching_rect" : [ 512.199983437856076, 415.736807942390442, 34.0, 22.0 ]
 			}
 
 		}
 , 		{
 			"box" : 			{
 				"maxclass" : "function",
-				"outlettype" : [ "float", "", "", "bang" ],
 				"id" : "obj-265",
-				"patching_rect" : [ 417.866650104522705, 288.041422843933105, 200.0, 100.0 ],
+				"parameter_enable" : 0,
 				"numinlets" : 1,
 				"numoutlets" : 4,
-				"parameter_enable" : 0,
-				"addpoints" : [ 36.95900009033528, 0.453257602055868, 0, 241.134879753944716, 1.0, 0, 293.262499444028151, 0.133885637919108, 0, 351.773179274924246, 1.0, 0, 558.23559583501617, 0.773257602055867, 0, 978.448361792462947, 0.293257602055868, 0 ]
+				"outlettype" : [ "float", "", "", "bang" ],
+				"patching_rect" : [ 451.866650104522705, 304.041422843933105, 200.0, 100.0 ],
+				"addpoints" : [ 36.95900009033528, 0.453257602055868, 0, 241.134879753944716, 1.0, 0, 351.773179274924246, 1.0, 0, 558.23559583501617, 0.773257602055867, 0, 978.448361792462947, 0.293257602055868, 0 ]
 			}
 
 		}
@@ -232,11 +247,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "newobj",
 				"text" : "*~",
-				"outlettype" : [ "signal" ],
 				"id" : "obj-201",
-				"patching_rect" : [ 325.016096413135529, 416.208064556121826, 29.5, 22.0 ],
 				"numinlets" : 2,
-				"numoutlets" : 1
+				"numoutlets" : 1,
+				"outlettype" : [ "signal" ],
+				"patching_rect" : [ 359.016096413135529, 432.208064556121826, 29.5, 22.0 ]
 			}
 
 		}
@@ -244,11 +259,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "newobj",
 				"text" : "+ 60",
-				"outlettype" : [ "int" ],
 				"id" : "obj-213",
-				"patching_rect" : [ 325.016096413135529, 255.32875120639801, 32.0, 22.0 ],
 				"numinlets" : 2,
-				"numoutlets" : 1
+				"numoutlets" : 1,
+				"outlettype" : [ "int" ],
+				"patching_rect" : [ 359.016096413135529, 271.32875120639801, 32.0, 22.0 ]
 			}
 
 		}
@@ -256,11 +271,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "newobj",
 				"text" : "mtof",
-				"outlettype" : [ "" ],
 				"id" : "obj-215",
-				"patching_rect" : [ 325.016096413135529, 345.041422843933105, 32.0, 22.0 ],
 				"numinlets" : 1,
-				"numoutlets" : 1
+				"numoutlets" : 1,
+				"outlettype" : [ "" ],
+				"patching_rect" : [ 359.016096413135529, 361.041422843933105, 32.0, 22.0 ]
 			}
 
 		}
@@ -268,34 +283,38 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "newobj",
 				"text" : "cycle~",
-				"outlettype" : [ "signal" ],
 				"id" : "obj-217",
-				"patching_rect" : [ 325.016096413135529, 382.731128096580505, 43.0, 22.0 ],
 				"numinlets" : 2,
-				"numoutlets" : 1
+				"numoutlets" : 1,
+				"outlettype" : [ "signal" ],
+				"patching_rect" : [ 359.016096413135529, 398.731128096580505, 43.0, 22.0 ]
 			}
 
 		}
 , 		{
 			"box" : 			{
 				"maxclass" : "ezdac~",
+				"presentation_rect" : [ 62.14942467212677, 120.208064019680023, 45.0, 45.0 ],
 				"id" : "obj-34",
-				"patching_rect" : [ 203.200000762939453, 392.208064556121826, 45.0, 45.0 ],
 				"numinlets" : 2,
-				"numoutlets" : 0
+				"numoutlets" : 0,
+				"presentation" : 1,
+				"patching_rect" : [ 237.200000762939453, 408.208064556121826, 45.0, 45.0 ]
 			}
 
 		}
 , 		{
 			"box" : 			{
 				"maxclass" : "gain~",
-				"outlettype" : [ "signal", "" ],
+				"presentation_rect" : [ 23.799995005130768, 120.208064019680023, 33.599999308586121, 102.799999952316284 ],
 				"id" : "obj-32",
-				"patching_rect" : [ 203.200000762939453, 274.736847281455994, 80.0, 106.0 ],
+				"parameter_enable" : 0,
 				"numinlets" : 1,
 				"numoutlets" : 2,
+				"presentation" : 1,
+				"outlettype" : [ "signal", "" ],
 				"multichannelvariant" : 0,
-				"parameter_enable" : 0
+				"patching_rect" : [ 237.200000762939453, 290.736847281455994, 80.0, 106.0 ]
 			}
 
 		}
@@ -303,24 +322,24 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "newobj",
 				"text" : "route midi genNum orgNum playing",
-				"outlettype" : [ "", "", "", "", "" ],
 				"id" : "obj-6",
-				"patching_rect" : [ 36.000000536441803, 144.000002145767212, 197.0, 22.0 ],
 				"numinlets" : 5,
-				"numoutlets" : 5
+				"numoutlets" : 5,
+				"outlettype" : [ "", "", "", "", "" ],
+				"patching_rect" : [ 36.000000536441803, 144.000002145767212, 197.0, 22.0 ]
 			}
 
 		}
 , 		{
 			"box" : 			{
 				"maxclass" : "flonum",
-				"outlettype" : [ "", "bang" ],
 				"format" : 6,
 				"id" : "obj-2",
-				"patching_rect" : [ 36.000000536441803, 195.20000034570694, 50.0, 22.0 ],
+				"parameter_enable" : 0,
 				"numinlets" : 1,
 				"numoutlets" : 2,
-				"parameter_enable" : 0
+				"outlettype" : [ "", "bang" ],
+				"patching_rect" : [ 36.000000536441803, 195.20000034570694, 50.0, 22.0 ]
 			}
 
 		}
@@ -328,11 +347,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "message",
 				"text" : "port 1001",
-				"outlettype" : [ "" ],
 				"id" : "obj-13",
-				"patching_rect" : [ 36.000000536441803, 69.599999725818634, 59.0, 22.0 ],
 				"numinlets" : 2,
-				"numoutlets" : 1
+				"numoutlets" : 1,
+				"outlettype" : [ "" ],
+				"patching_rect" : [ 36.000000536441803, 69.599999725818634, 59.0, 22.0 ]
 			}
 
 		}
@@ -340,11 +359,11 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"box" : 			{
 				"maxclass" : "newobj",
 				"text" : "udpreceive max",
-				"outlettype" : [ "" ],
 				"id" : "obj-8",
-				"patching_rect" : [ 36.000000536441803, 105.799999713897705, 93.0, 22.0 ],
 				"numinlets" : 1,
-				"numoutlets" : 1
+				"numoutlets" : 1,
+				"outlettype" : [ "" ],
+				"patching_rect" : [ 36.000000536441803, 105.799999713897705, 93.0, 22.0 ]
 			}
 
 		}
