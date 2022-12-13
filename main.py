@@ -126,12 +126,13 @@ def computeFitness(genNum, currGen):
     #print("Computing Fitness for generation " + str(genNum))
     #
     #example
-    exception = [1,3,6,8,10,13,15,18,20,22]
+    scale = [0,2,4,5,7,9,11,12]#14,16,17,19,21,23,24]
+    exception = [1,3,6,8,10]#13,15,18,20,22]
     for organism in currGen.organisms:
         #organism.fitness = organism.genes[0] % random.randrange(1,200) #random number to mod by
-        organism.fitness = organism.genes[0] % 24
+        organism.fitness = organism.genes[0] % 12
         if organism.fitness in exception:
-                organism.fitness += 1
+                organism.fitness = scale[random.randrange(0,8)]#1
         
         #print("fit: " + str(organism.fitness))
         # note: if your fitness calculation is the exact same every time, convergence will happen very quickly
@@ -160,8 +161,8 @@ def crossover(genNum, currGen):
         currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
         currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
         #crossover second gene in array
-        currGen.organisms[childOne].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 3)) % 100 # make this value a percentage, so can be translated to between 0 and 1 during playback
-        currGen.organisms[childTwo].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 2)) % 100
+        currGen.organisms[childOne].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 3)) % 80 # make this value a percentage, so can be translated to between 0 and 1 during playback
+        currGen.organisms[childTwo].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 2)) % 80
                 #crossover second gene in array
         currGen.organisms[childOne].genes[2] = (currGen.organisms[parOne].genes[2] + (currGen.organisms[parTwo].genes[2] * 3)) % 100 # make this value a percentage, so can be translated to between 0 and 1 during playback
         currGen.organisms[childTwo].genes[2] = (currGen.organisms[parOne].genes[2] + (currGen.organisms[parTwo].genes[2] * 2)) % 100
@@ -177,7 +178,7 @@ def mutation(genNum, currGen):
         # mutate gene 1
         currGen.organisms[randomNum].genes[0] = random.randrange(1, int(currGen.size/2))
         # mutate gene 2
-        currGen.organisms[randomNum].genes[1] = random.randrange(1,100) # keep within 1-100 so can be translated to percentage
+        currGen.organisms[randomNum].genes[1] = random.randrange(1,50) # keep within 1-100 so can be translated to percentage
         pass
     # mutate gene 2 separately
     # for i in range(1, int(numMutated)):
