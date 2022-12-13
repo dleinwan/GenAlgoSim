@@ -35,8 +35,9 @@ class Organism:
         #TODO: randomize genes
         #
         #example
-        randomNum = random.randrange(1, 2)
-        self.genes = [randomNum]
+        randomNum1 = random.randrange(1, 2)
+        randomNum2 = random.randrange(1, 2)
+        self.genes = [randomNum1, randomNum2]
         pass
 
 class Population:
@@ -148,8 +149,12 @@ def crossover(genNum, currGen):
         #if size=200, replace lowest 100 with children of parents
         childOne = parOne - (currGen.size - 1)
         childTwo = parOne - (currGen.size - 2)
+        # gene 1
         currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
         currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
+        # gene 2
+        currGen.organisms[childOne].genes[1] = 100 - currGen.organisms[childOne].genes[0] - random.randrange(1,20)
+        currGen.organisms[childTwo].genes[1] = 100 - currGen.organisms[childTwo].genes[0] - random.randrange(1,20)
         pass
     pass
 
@@ -211,6 +216,7 @@ def playFitness(genNum, currGen):
         i = i + 1
         #if (i % 2):
         client.send_message("midi", organism.fitness)
+        client.send_message("midi2", organism.genes[1])
         client.send_message("orgNum", i)
         time.sleep(.01)
     playing = 0
