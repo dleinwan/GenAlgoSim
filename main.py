@@ -127,13 +127,13 @@ def computeFitness(genNum, currGen):
     #
     #example
     #exception = [1,3,6,8,10,13,15,18,20,22]
-    scale = [0,3,5,6,7,10,12,15,17,18,18,19,22,24]
-    exception = [1,2,4,8,9,11,13,14,16,20,21,23]
+    scale = [0,3,5,6,7,10,12]#15,17,18,19,22,24]
+    exception = [1,2,4,8,9,11]#,13,14,16,20,21,23]
     for organism in currGen.organisms:
         #organism.fitness = organism.genes[0] % random.randrange(1,200) #random number to mod by
-        organism.fitness = organism.genes[0] % 24
+        organism.fitness = organism.genes[0] % 12
         if organism.fitness in exception:
-                organism.fitness = scale[random.randrange(0,14)]
+                organism.fitness = scale[random.randrange(0,7)]
         
         #print("fit: " + str(organism.fitness))
         # note: if your fitness calculation is the exact same every time, convergence will happen very quickly
@@ -162,8 +162,8 @@ def crossover(genNum, currGen):
         currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
         currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] - currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
         #crossover second gene in array
-        currGen.organisms[childOne].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 3)) % 100 # make this value a percentage, so can be translated to between 0 and 1 during playback
-        currGen.organisms[childTwo].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 2)) % 100
+        currGen.organisms[childOne].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 3)) % 80 # make this value a percentage, so can be translated to between 0 and 1 during playback
+        currGen.organisms[childTwo].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 2)) % 80
                 #crossover second gene in array
         currGen.organisms[childOne].genes[2] = (currGen.organisms[parOne].genes[2] + (currGen.organisms[parTwo].genes[2] * 3)) % 100 # make this value a percentage, so can be translated to between 0 and 1 during playback
         currGen.organisms[childTwo].genes[2] = (currGen.organisms[parOne].genes[2] + (currGen.organisms[parTwo].genes[2] * 2)) % 100
