@@ -1,7 +1,30 @@
 Copy and paste the contents of the file below into an open Max patcher.
-
 {
 	"boxes" : [ 		{
+			"box" : 			{
+				"maxclass" : "newobj",
+				"text" : "+ 60",
+				"id" : "obj-69",
+				"numinlets" : 2,
+				"numoutlets" : 1,
+				"outlettype" : [ "int" ],
+				"patching_rect" : [ 374.0, 265.0, 32.0, 22.0 ]
+			}
+
+		}
+, 		{
+			"box" : 			{
+				"maxclass" : "newobj",
+				"text" : "+ 60",
+				"id" : "obj-68",
+				"numinlets" : 2,
+				"numoutlets" : 1,
+				"outlettype" : [ "int" ],
+				"patching_rect" : [ 536.0, 271.0, 32.0, 22.0 ]
+			}
+
+		}
+, 		{
 			"box" : 			{
 				"maxclass" : "newobj",
 				"text" : "t f f",
@@ -56,7 +79,7 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"id" : "obj-48",
 				"numinlets" : 1,
 				"numoutlets" : 0,
-				"patching_rect" : [ 374.0, 535.0, 54.0, 22.0 ]
+				"patching_rect" : [ 374.0, 570.0, 54.0, 22.0 ]
 			}
 
 		}
@@ -68,7 +91,7 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"numinlets" : 2,
 				"numoutlets" : 1,
 				"outlettype" : [ "multichannelsignal" ],
-				"patching_rect" : [ 374.0, 479.731128096580505, 140.0, 22.0 ]
+				"patching_rect" : [ 374.0, 514.731128096580505, 140.0, 22.0 ]
 			}
 
 		}
@@ -80,7 +103,7 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"numinlets" : 2,
 				"numoutlets" : 2,
 				"outlettype" : [ "setvalue", "int" ],
-				"patching_rect" : [ 536.0, 314.0, 59.0, 22.0 ]
+				"patching_rect" : [ 536.0, 349.0, 59.0, 22.0 ]
 			}
 
 		}
@@ -92,7 +115,7 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"numinlets" : 1,
 				"numoutlets" : 1,
 				"outlettype" : [ "" ],
-				"patching_rect" : [ 536.0, 276.20000034570694, 32.0, 22.0 ]
+				"patching_rect" : [ 536.0, 311.20000034570694, 32.0, 22.0 ]
 			}
 
 		}
@@ -104,7 +127,7 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"numinlets" : 2,
 				"numoutlets" : 1,
 				"outlettype" : [ "multichannelsignal" ],
-				"patching_rect" : [ 536.0, 352.32875120639801, 126.0, 22.0 ]
+				"patching_rect" : [ 536.0, 387.32875120639801, 126.0, 22.0 ]
 			}
 
 		}
@@ -116,7 +139,7 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"numinlets" : 2,
 				"numoutlets" : 1,
 				"outlettype" : [ "multichannelsignal" ],
-				"patching_rect" : [ 374.0, 436.0, 40.0, 22.0 ]
+				"patching_rect" : [ 374.0, 471.0, 40.0, 22.0 ]
 			}
 
 		}
@@ -128,7 +151,7 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"numinlets" : 2,
 				"numoutlets" : 2,
 				"outlettype" : [ "setvalue", "int" ],
-				"patching_rect" : [ 374.0, 314.0, 59.0, 22.0 ]
+				"patching_rect" : [ 374.0, 349.0, 59.0, 22.0 ]
 			}
 
 		}
@@ -140,7 +163,7 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"numinlets" : 1,
 				"numoutlets" : 1,
 				"outlettype" : [ "" ],
-				"patching_rect" : [ 374.0, 276.20000034570694, 32.0, 22.0 ]
+				"patching_rect" : [ 374.0, 311.20000034570694, 32.0, 22.0 ]
 			}
 
 		}
@@ -152,7 +175,7 @@ Copy and paste the contents of the file below into an open Max patcher.
 				"numinlets" : 2,
 				"numoutlets" : 1,
 				"outlettype" : [ "multichannelsignal" ],
-				"patching_rect" : [ 374.0, 352.32875120639801, 126.0, 22.0 ]
+				"patching_rect" : [ 374.0, 387.32875120639801, 126.0, 22.0 ]
 			}
 
 		}
@@ -417,6 +440,34 @@ Copy and paste the contents of the file below into an open Max patcher.
  ],
 	"lines" : [ 		{
 			"patchline" : 			{
+				"source" : [ "obj-68", 0 ],
+				"destination" : [ "obj-45", 0 ]
+			}
+
+		}
+, 		{
+			"patchline" : 			{
+				"source" : [ "obj-59", 0 ],
+				"destination" : [ "obj-68", 0 ]
+			}
+
+		}
+, 		{
+			"patchline" : 			{
+				"source" : [ "obj-69", 0 ],
+				"destination" : [ "obj-41", 0 ]
+			}
+
+		}
+, 		{
+			"patchline" : 			{
+				"source" : [ "obj-57", 0 ],
+				"destination" : [ "obj-69", 0 ]
+			}
+
+		}
+, 		{
+			"patchline" : 			{
 				"source" : [ "obj-63", 1 ],
 				"destination" : [ "obj-46", 0 ]
 			}
@@ -503,20 +554,6 @@ Copy and paste the contents of the file below into an open Max patcher.
 			"patchline" : 			{
 				"source" : [ "obj-2", 0 ],
 				"destination" : [ "obj-57", 0 ]
-			}
-
-		}
-, 		{
-			"patchline" : 			{
-				"source" : [ "obj-59", 0 ],
-				"destination" : [ "obj-45", 0 ]
-			}
-
-		}
-, 		{
-			"patchline" : 			{
-				"source" : [ "obj-57", 0 ],
-				"destination" : [ "obj-41", 0 ]
 			}
 
 		}
