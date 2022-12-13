@@ -133,7 +133,7 @@ def computeFitness(genNum, currGen):
         #organism.fitness = organism.genes[0] % random.randrange(1,200) #random number to mod by
         organism.fitness = organism.genes[0] % 24
         if organism.fitness in exception:
-                organism.fitness = scale[random.randrange(0,13)]
+                organism.fitness = scale[random.randrange(0,14)]
         
         #print("fit: " + str(organism.fitness))
         # note: if your fitness calculation is the exact same every time, convergence will happen very quickly
