@@ -35,8 +35,11 @@ class Organism:
         #TODO: randomize genes
         #
         #example
-        randomNum = random.randrange(1, 2)
-        self.genes = [randomNum]
+        randomNum1 = random.randrange(1, 2)
+        randomNum2 = random.randrange(1, 2)
+        randomNum3 = random.randrange(1, 2)
+        # genes = [frequency, duration]
+        self.genes = [randomNum1, randomNum2, randomNum3]
         pass
 
 class Population:
@@ -67,7 +70,7 @@ def main():
 
     #TODO: decide on number of generations to run for
     #number of generations algorithm will run for
-    numGens = 2000
+    numGens = 20
 
     print("Beginning of Generations")
     currGeneration = Population()
@@ -123,8 +126,13 @@ def computeFitness(genNum, currGen):
     #print("Computing Fitness for generation " + str(genNum))
     #
     #example
+    exception = [5,5+7*1,5+12*1,5+12+7*1,5+12*2,5+12*2+7,5+12*3,3,2,1]
     for organism in currGen.organisms:
-        organism.fitness = organism.genes[0] % random.randrange(1,200) #random number to mod by 
+        #organism.fitness = organism.genes[0] % random.randrange(1,200) #random number to mod by
+        organism.fitness = organism.genes[0] % 24
+        if organism.fitness in exception:
+                organism.fitness += 1
+        
         #print("fit: " + str(organism.fitness))
         # note: if your fitness calculation is the exact same every time, convergence will happen very quickly
     pass
@@ -145,11 +153,18 @@ def crossover(genNum, currGen):
     for parOne in range(int((currGen.size * 3/4)) - 1, currGen.size):
         # if size=200, parOne (first parent) from 149-199
         parTwo = parOne - 50  #parent two index
-        #if size=200, replace lowest 100 with children of parents
+        # if size=200, replace lowest 100 with children of parents
         childOne = parOne - (currGen.size - 1)
         childTwo = parOne - (currGen.size - 2)
+        #crossover first gene in array
         currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
         currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
+        #crossover second gene in array
+        currGen.organisms[childOne].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 3)) % 100 # make this value a percentage, so can be translated to between 0 and 1 during playback
+        currGen.organisms[childTwo].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 2)) % 100
+                #crossover second gene in array
+        currGen.organisms[childOne].genes[2] = (currGen.organisms[parOne].genes[2] + (currGen.organisms[parTwo].genes[2] * 3)) % 100 # make this value a percentage, so can be translated to between 0 and 1 during playback
+        currGen.organisms[childTwo].genes[2] = (currGen.organisms[parOne].genes[2] + (currGen.organisms[parTwo].genes[2] * 2)) % 100
         pass
     pass
 
@@ -159,8 +174,17 @@ def mutation(genNum, currGen):
     numMutated = currGen.size / 25
     for i in range(1, int(numMutated)):
         randomNum = random.randrange(0, currGen.size)
+        # mutate gene 1
         currGen.organisms[randomNum].genes[0] = random.randrange(1, int(currGen.size/2))
+        # mutate gene 2
+        currGen.organisms[randomNum].genes[1] = random.randrange(1,100) # keep within 1-100 so can be translated to percentage
         pass
+    # mutate gene 2 separately
+    # for i in range(1, int(numMutated)):
+    #     randomNum = random.randrange(0, currGen.size)
+    #     # mutate gene 2
+    #     currGen.organisms[randomNum].genes[1] = random.randrange(1,100) # keep within 1-100 so can be translated to percentage
+    #     pass
     pass
 
 def printFitness(genNum, currGen):
@@ -171,6 +195,8 @@ def printFitness(genNum, currGen):
 def printFitnessOneLine(genNum, currGen):
     for organism in currGen.organisms:
         print(int(organism.fitness), end=' ')
+    for organism in currGen.organisms:
+        print(float(organism.genes[1]/1000), end=' ')
     pass
 
 def plotFitness(genNum, currGen):
@@ -212,7 +238,7 @@ def playFitness(genNum, currGen):
         #if (i % 2):
         client.send_message("midi", organism.fitness)
         client.send_message("orgNum", i)
-        time.sleep(.0001)
+        time.sleep(organism.genes[1]/80)
     playing = 0
     client.send_message("playing", playing)
 
@@ -231,7 +257,3 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         stopSound()
         print('Interrupted')
-
-
-
-
