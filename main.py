@@ -126,7 +126,7 @@ def computeFitness(genNum, currGen):
     #print("Computing Fitness for generation " + str(genNum))
     #
     #example
-    exception = [5,5+7*1,5+12*1,5+12+7*1,5+12*2,5+12*2+7,5+12*3,3,2,1]
+    exception = [5,5+7*1,5+12*1,5+12+7*1,5+12*2,5+12*2+7,5+12*3,5+12*3+7,5+12*3,5+12*3+7]
     for organism in currGen.organisms:
         #organism.fitness = organism.genes[0] % random.randrange(1,200) #random number to mod by
         organism.fitness = organism.genes[0] % 24
@@ -142,7 +142,7 @@ def selection(genNum, currGen):
     #print("Selecting best performers " + str(genNum))
     #
     #example
-    currGen.organisms.sort(key=lambda x: x.fitness, reverse=False) #sort population list by fitness
+    currGen.organisms.sort(key=lambda x: x.fitness, reverse=True) #sort population list by fitness
     pass
 
 def crossover(genNum, currGen):
