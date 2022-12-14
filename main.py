@@ -70,7 +70,7 @@ def main():
 
     #TODO: decide on number of generations to run for
     #number of generations algorithm will run for
-    numGens = 20
+    numGens = 400
 
     print("Beginning of Generations")
     currGeneration = Population()
