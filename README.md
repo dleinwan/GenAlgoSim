@@ -1,5 +1,6 @@
-# GenAlgo
-Genetic Algorithm for music generation  
+# GenAlgoSim
+Genetic Algorithm for music generation
+Each branch has a different iteration of this algorithm  
 Based on GenAlgo framework here https://github.com/dleinwan/GenAlgo.git  
 (For any problems with running this code or inquiries about this project, contact Dani danilwander@gmail.com)
 
