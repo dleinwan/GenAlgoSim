@@ -220,9 +220,9 @@ def playFitness(genNum, currGen):
         i = i + 1
         #if (i % 2):
         client.send_message("midi", organism.fitness)
-        client.send_message("midi2", organism.genes[1])
-        # random_num = random.randrange(1,30)
-        # client.send_message("midi2", random_num)
+        #client.send_message("midi2", organism.genes[1])
+        random_num = random.randrange(1,30)
+        client.send_message("midi2", random_num)
         client.send_message("orgNum", i)
         time.sleep(.01)
     playing = 0
