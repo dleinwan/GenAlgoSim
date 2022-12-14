@@ -15,6 +15,7 @@
 import random
 import matplotlib.pyplot as plt
 import time
+import numpy as np
 
 #from tkinter import *
 
@@ -49,7 +50,7 @@ class Population:
 
     def __init__(self):
         self.organisms = []
-        self. size = 100
+        self. size = 40
         for i in range(self.size):
             self.organisms.append(Organism(self.size))
         pass
@@ -143,6 +144,10 @@ def selection(genNum, currGen):
     #print("Selecting best performers " + str(genNum))
     #
     #example
+    scale = [0,2,4,5,7,9,11,12]
+    fitness_array = np.array([org.fitness for org in currGen.organisms])
+    fit = fitness_array[np.where(fitness_array.all in scale)]
+    #currGen.organisms[fit] = np.zeros(len(fit))
     currGen.organisms.sort(key=lambda x: x.fitness, reverse=False) #sort population list by fitness
     pass
 
@@ -239,7 +244,7 @@ def playFitness(genNum, currGen):
         #if (i % 2):
         client.send_message("midi", organism.fitness)
         client.send_message("orgNum", i)
-        time.sleep(organism.genes[1]/80)
+        time.sleep(organism.genes[1]/200)
     playing = 0
     client.send_message("playing", playing)
 
