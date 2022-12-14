@@ -15,6 +15,7 @@
 import random
 import matplotlib.pyplot as plt
 import time
+import numpy as np
 
 #from tkinter import *
 
@@ -144,6 +145,10 @@ def selection(genNum, currGen):
     #print("Selecting best performers " + str(genNum))
     #
     #example
+    scale = [0,3,5,6,7,10,12]
+    fitness_array = np.array([org.fitness for org in currGen.organisms])
+    fit = fitness_array[np.where(fitness_array.all in scale)]
+    #currGen.organisms[fit] = np.zeros(len(fit))
     currGen.organisms.sort(key=lambda x: x.fitness, reverse=False) #sort population list by fitness
     pass
 
