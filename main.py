@@ -45,11 +45,11 @@ class Organism:
 class Population:
     organisms = []
     #TODO: decide on population size
-    size = 200 #make sure divisible by 4
+    size = 40 #make sure divisible by 4
 
     def __init__(self):
         self.organisms = []
-        self. size = 100
+        self.size = 40
         for i in range(self.size):
             self.organisms.append(Organism(self.size))
         pass
@@ -70,7 +70,7 @@ def main():
 
     #TODO: decide on number of generations to run for
     #number of generations algorithm will run for
-    numGens = 2000
+    numGens = 20
 
     print("Beginning of Generations")
     currGeneration = Population()
@@ -160,7 +160,7 @@ def crossover(genNum, currGen):
         childTwo = parOne - (currGen.size - 2)
         #crossover first gene in array
         currGen.organisms[childOne].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/2)
-        currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] - currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
+        currGen.organisms[childTwo].genes[0] = (currGen.organisms[parOne].genes[0] + currGen.organisms[parTwo].genes[0]) % (currGen.size/4)
         #crossover second gene in array
         currGen.organisms[childOne].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 3)) % 80 # make this value a percentage, so can be translated to between 0 and 1 during playback
         currGen.organisms[childTwo].genes[1] = (currGen.organisms[parOne].genes[1] + (currGen.organisms[parTwo].genes[1] * 2)) % 80
@@ -240,7 +240,7 @@ def playFitness(genNum, currGen):
         #if (i % 2):
         client.send_message("midi", organism.fitness)
         client.send_message("orgNum", i)
-        time.sleep(organism.genes[1]/300)
+        time.sleep(organism.genes[1]/200)
     playing = 0
     client.send_message("playing", playing)
 
